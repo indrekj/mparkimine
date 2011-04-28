@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">M-parkimine</string>
+    <string-array name="tartu_regions">
+	    <item name="region_a">A piirkond (15 minutit tasuta)</item>
+	    <item name="region_b">B piirkond (60 minutit tasuta)</item>
+	    <item name="region_c">C piikond (60 minutit tasuta)</item>    
+    </string-array>
+    <string-array name="tallinn_regions"> 
+    </string-array>
+    
+    <string name="add_new">+ Lisa uus...</string>
+    <string name="add">Lisa</string>
+    <string name="cancel">Tühista</string>
+    <string name="start_parking">Alusta parkimist</string>
+    
+    <string name="new_car">Uue auto lisamine</string>
+    <string name="choose_registration_number">Vali auto</string>
+    <string name="registration_number">Auto registreerimisnumber</string>
+    
+    <string name="city_prompt">Vali linn</string>
+    <string-array name="cities_array">
+        <item name="city_tartu">Tartu</item>
+        <item name="city_tallinn">Tallinn</item>
+        <item name="city_etc">etc</item>
+	</string-array>
+	<string name="choose_city">Vali linn:</string>
+</resources>
