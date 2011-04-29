@@ -1,3 +1,4 @@
+
 package eu.urgas.mparkimine.adapters;
 
 import eu.urgas.mparkimine.R;
@@ -10,19 +11,28 @@ import android.widget.TextView;
 
 public class CitiesListAdapter extends BaseExpandableListAdapter {
     private Context mContext;
-    
-    // Sample data set. children[i] contains the children (String[]) for groups[i].
-    private String[] groups = { "Tartu", "Tallinn", "etc" };
+
+    // Sample data set. children[i] contains the children (String[]) for
+    // groups[i].
+    private String[] groups = {
+            "Tartu", "Tallinn", "etc"
+    };
     private String[][] children = {
-            { "Barry", "Chuck", "David" },
-            { "Ace", "Bandit", "Cha-Cha", "Deuce" },
-            { "Fluffy", "Snuggles" }
+            {
+                    "Barry", "Chuck", "David"
+            },
+            {
+                    "Ace", "Bandit", "Cha-Cha", "Deuce"
+            },
+            {
+                    "Fluffy", "Snuggles"
+            }
     };
 
     public CitiesListAdapter(Context context) {
         this.mContext = context;
     }
-    
+
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         return children[groupPosition][childPosition];
@@ -32,10 +42,11 @@ public class CitiesListAdapter extends BaseExpandableListAdapter {
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
-       
+
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
-            ViewGroup parent) {       
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
+            View convertView,
+            ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(R.layout.child_row, null);
@@ -68,7 +79,8 @@ public class CitiesListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
+            ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(R.layout.group_row, null);

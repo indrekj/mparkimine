@@ -1,3 +1,4 @@
+
 package eu.urgas.mparkimine.items;
 
 public class CarRegistrationNumber {
@@ -12,6 +13,7 @@ public class CarRegistrationNumber {
     }
 
     public boolean equals(Object o) {
-        return o instanceof CarRegistrationNumber && ((CarRegistrationNumber) o).number.compareTo(number) == 0;
+        return o instanceof CarRegistrationNumber
+                && ((CarRegistrationNumber) o).number.compareTo(number) == 0;
     }
 }
