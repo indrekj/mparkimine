@@ -9,7 +9,7 @@
     <string-array name="tallinn_regions"> 
     </string-array>
     
-    <string name="add_new">+ Lisa uus...</string>
+    <string name="add_new">Lisa uus...</string>
     <string name="add">Lisa</string>
     <string name="cancel">Tühista</string>
     <string name="start_parking">Alusta parkimist</string>

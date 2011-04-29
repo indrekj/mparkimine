@@ -8,20 +8,21 @@ import eu.urgas.mparkimine.items.CarRegistrationNumber;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.MenuItem;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
-import android.view.View.OnCreateContextMenuListener;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 public class StartParkingActivity extends Activity {
-    private static final int CONTEXTMENU_ADDNEW = 1337;
+    private static final int NEW_CAR_REGISTRATION_DIALOG_ID = 0;
+    private static final int CAR_REGISTRATION_NUMBERS_DIALOG_ID = 1;
 
     private TextView mChooseCarRegistrationNumberTextView;
     private ExpandableListView citiesList;
@@ -33,30 +34,28 @@ public class StartParkingActivity extends Activity {
 
         setContentView(R.layout.main);
 
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        
+        Log.v("wha", "111: " + tm.getNetworkOperatorName()); // EMT, TELE2? RADIOLINJA? ELISA?
+        Log.v("wha", "222: " + tm.getNetworkOperator()); // 24801, 
+        Log.v("wha", "333: " + tm.getNetworkCountryIso()); // EE, 
+        
         fetchExistingCarRegistrationNumbers();
         
         initCitiesList();
         initCarRegistrationNumberDropDownList();
     }
-    
-    @Override
-    public boolean onContextItemSelected(MenuItem aItem) {
-        /* Switch on the ID of the item, to get what the user selected. */
-        switch (aItem.getItemId()) {
-        case CONTEXTMENU_ADDNEW:
-            showNewCarRegistrationNumberDialog();
-            break;
-        default:
-            CarRegistrationNumber number = carRegistrationNumbers.get(aItem.getItemId());
-            selectCarRegistrationNumber(number);
-            break;
-        }
-        return true;
-    }
 
-    private void fetchExistingCarRegistrationNumbers() {
-        // TODO
-        carRegistrationNumbers.add(new CarRegistrationNumber("666XXX"));
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+        case NEW_CAR_REGISTRATION_DIALOG_ID:
+            return createNewCarRegistrationNumberDialog();
+        case CAR_REGISTRATION_NUMBERS_DIALOG_ID:
+            return createCarRegistrationNumbersDialog();
+        default:
+            return super.onCreateDialog(id);
+        }
     }
 
     private void initCitiesList() {
@@ -71,51 +70,71 @@ public class StartParkingActivity extends Activity {
         this.mChooseCarRegistrationNumberTextView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                view.showContextMenu();
-            }
-        });
-
-        mChooseCarRegistrationNumberTextView.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
-            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-                menu.setHeaderTitle(getString(R.string.choose_registration_number));
-                for (int i = 0; i < carRegistrationNumbers.size(); i++) {
-                    CarRegistrationNumber number = carRegistrationNumbers.get(i);
-                    menu.add(1, i, 0, number.toString());
-                }
-                menu.add(0, CONTEXTMENU_ADDNEW, 0, getString(R.string.add_new));
+                showDialog(CAR_REGISTRATION_NUMBERS_DIALOG_ID);
             }
         });
     }
     
-    private void showNewCarRegistrationNumberDialog() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle(getString(R.string.new_car));
-        alertBuilder.setIcon(R.drawable.icon);
-        alertBuilder.setMessage(getString(R.string.registration_number));
+    private void fetchExistingCarRegistrationNumbers() {
+        // TODO
+        carRegistrationNumbers.add(new CarRegistrationNumber("666XXX"));
+    }
+    
+    private void selectCarRegistrationNumber(CarRegistrationNumber number) {
+        mChooseCarRegistrationNumberTextView.setText(number.toString());
+    }
+    
+    private Dialog createCarRegistrationNumbersDialog() {
+        final CharSequence[] items = new CharSequence[this.carRegistrationNumbers.size()];
+        for (int i = 0; i < carRegistrationNumbers.size(); i++) {
+            items[i] = carRegistrationNumbers.get(i).toString();
+        }
+        
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.choose_registration_number));
+        builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                selectCarRegistrationNumber(carRegistrationNumbers.get(which));
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton(getString(R.string.add_new), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                showDialog(NEW_CAR_REGISTRATION_DIALOG_ID);
+            }
+        });
+        
+        return builder.create();
+    }
+    
+    private Dialog createNewCarRegistrationNumberDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.new_car));
+        builder.setMessage(getString(R.string.registration_number));
         
         // Set an EditText view to get user input 
         final EditText input = new EditText(this);
-        alertBuilder.setView(input);
+        builder.setView(input);
 
         // Add and cancel listeners
-        alertBuilder.setPositiveButton(getString(R.string.add), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.add), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 CarRegistrationNumber number = new CarRegistrationNumber(input.getText().toString());
                 carRegistrationNumbers.add(number);
                 selectCarRegistrationNumber(number);
+                
+                // not nice, but this way it creates a new dialog with new items next time
+                removeDialog(CAR_REGISTRATION_NUMBERS_DIALOG_ID);
+                removeDialog(NEW_CAR_REGISTRATION_DIALOG_ID);
             }
         });
-        alertBuilder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
+                removeDialog(NEW_CAR_REGISTRATION_DIALOG_ID);
             }
         });
-        
-        // Create and show
-        alertBuilder.create().show();
-    }
 
-    private void selectCarRegistrationNumber(CarRegistrationNumber number) {
-        mChooseCarRegistrationNumberTextView.setText(number.toString());
+        return builder.create();
     }
 }
