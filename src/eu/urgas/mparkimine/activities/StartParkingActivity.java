@@ -1,4 +1,3 @@
-
 package eu.urgas.mparkimine.activities;
 
 import java.util.ArrayList;

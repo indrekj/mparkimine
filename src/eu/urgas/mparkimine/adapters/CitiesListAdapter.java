@@ -1,7 +1,10 @@
-
 package eu.urgas.mparkimine.adapters;
 
+import eu.urgas.mparkimine.CitiesManager;
 import eu.urgas.mparkimine.R;
+import eu.urgas.mparkimine.items.City;
+import eu.urgas.mparkimine.items.Region;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,31 +14,16 @@ import android.widget.TextView;
 
 public class CitiesListAdapter extends BaseExpandableListAdapter {
     private Context mContext;
-
-    // Sample data set. children[i] contains the children (String[]) for
-    // groups[i].
-    private String[] groups = {
-            "Tartu", "Tallinn", "etc"
-    };
-    private String[][] children = {
-            {
-                    "Barry", "Chuck", "David"
-            },
-            {
-                    "Ace", "Bandit", "Cha-Cha", "Deuce"
-            },
-            {
-                    "Fluffy", "Snuggles"
-            }
-    };
+    private CitiesManager citiesManager;
 
     public CitiesListAdapter(Context context) {
         this.mContext = context;
+        this.citiesManager = new CitiesManager();
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        return children[groupPosition][childPosition];
+    public Region getChild(int groupPosition, int childPosition) {
+        return this.citiesManager.get(groupPosition).getRegion(childPosition);
     }
 
     @Override
@@ -51,26 +39,27 @@ public class CitiesListAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(R.layout.child_row, null);
         }
+        Region region = getChild(groupPosition, childPosition);
         TextView name = (TextView) convertView.findViewById(R.id.child_name);
-        name.setText(getChild(groupPosition, childPosition).toString());
+        name.setText(region.getName());
         TextView desc = (TextView) convertView.findViewById(R.id.child_desc);
-        desc.setText("Piirkond X, Y minutit tasuta");
+        desc.setText(region.getDescription());
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return children[groupPosition].length;
+        return citiesManager.get(groupPosition).getRegionsSize();
     }
 
     @Override
-    public Object getGroup(int groupPosition) {
-        return groups[groupPosition];
+    public City getGroup(int groupPosition) {
+        return citiesManager.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return groups.length;
+        return citiesManager.size();
     }
 
     @Override

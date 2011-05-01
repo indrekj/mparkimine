@@ -1,4 +1,3 @@
-
 package eu.urgas.mparkimine.items;
 
 public class CarRegistrationNumber {
