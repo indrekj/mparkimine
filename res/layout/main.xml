@@ -17,5 +17,4 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:drawSelectorOnTop="false"/>
-	<Button android:layout_width="wrap_content" android:text="@string/start_parking" android:layout_height="wrap_content" android:id="@+id/start_parking"></Button>
 </LinearLayout>

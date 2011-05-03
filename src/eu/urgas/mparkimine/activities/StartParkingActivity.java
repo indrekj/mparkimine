@@ -6,6 +6,7 @@ import eu.urgas.mparkimine.CarRegistrationNumbersManager;
 import eu.urgas.mparkimine.R;
 import eu.urgas.mparkimine.adapters.CitiesListAdapter;
 import eu.urgas.mparkimine.items.CarRegistrationNumber;
+import eu.urgas.mparkimine.items.Region;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,6 +18,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -24,11 +26,13 @@ import android.widget.TextView;
 public class StartParkingActivity extends Activity {
     private static final int NEW_CAR_REGISTRATION_DIALOG_ID = 0;
     private static final int CAR_REGISTRATION_NUMBERS_DIALOG_ID = 1;
+    private static final int START_PARKING_DIALOG_ID = 2;
 
     private TextView mChooseCarRegistrationNumberTextView;
     private ExpandableListView mCitiesList;
 
     private CarRegistrationNumbersManager carRegistrationNumberManager;
+    private Region chosenRegion;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,8 +48,7 @@ public class StartParkingActivity extends Activity {
         Log.v("wha", "333: " + tm.getNetworkCountryIso()); // EE,
 
         carRegistrationNumberManager = new CarRegistrationNumbersManager(this);
-        mChooseCarRegistrationNumberTextView = (TextView) this
-                .findViewById(R.id.choose_car_registration_number);
+        mChooseCarRegistrationNumberTextView = (TextView) findViewById(R.id.choose_car_registration_number);
         mCitiesList = (ExpandableListView) findViewById(R.id.cities_list);
 
         selectDefaultCarRegistrationNumber();
@@ -54,13 +57,20 @@ public class StartParkingActivity extends Activity {
         initCarRegistrationNumberDropDownList();
     }
 
+    public void showStartParkingDialog(Region region) {
+        this.chosenRegion = region;
+        showDialog(START_PARKING_DIALOG_ID);
+    }
+
     @Override
-    protected Dialog onCreateDialog(int id) {
+    protected Dialog onCreateDialog(int id, Bundle args) {
         switch (id) {
             case NEW_CAR_REGISTRATION_DIALOG_ID:
                 return createNewCarRegistrationNumberDialog();
             case CAR_REGISTRATION_NUMBERS_DIALOG_ID:
                 return createCarRegistrationNumbersDialog();
+            case START_PARKING_DIALOG_ID:
+                return createStartParkingDialog();
             default:
                 return super.onCreateDialog(id);
         }
@@ -74,7 +84,7 @@ public class StartParkingActivity extends Activity {
     private void initCarRegistrationNumberDropDownList() {
         mChooseCarRegistrationNumberTextView.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 showDialog(CAR_REGISTRATION_NUMBERS_DIALOG_ID);
             }
         });
@@ -144,6 +154,32 @@ public class StartParkingActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         removeDialog(NEW_CAR_REGISTRATION_DIALOG_ID);
+                    }
+                });
+
+        return builder.create();
+    }
+
+    private Dialog createStartParkingDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.confirm_start_parking));
+
+        String nr = carRegistrationNumberManager.getDefault().toString();
+        String city = chosenRegion.getCity().toString();
+        String region = chosenRegion.getName();
+        builder.setMessage(nr + "\n" + city + "\n" + region);
+
+        // Confirm and cancel listeners
+        builder.setPositiveButton(getString(R.string.start_parking),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+        builder.setNegativeButton(getString(R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        removeDialog(START_PARKING_DIALOG_ID);
                     }
                 });
 
