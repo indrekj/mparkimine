@@ -21,6 +21,13 @@
     <string name="registration_number">Auto registreerimisnumber</string>
     <string name="confirm_start_parking">Parkimise alustamine</string>
     
+    <!-- Statuses -->
+    <string name="starting">Alustamine...</string>
+    <string name="started">Alustatud</string>
+    <string name="failed">EBAÕNNESTUS</string>
+    <string name="stopping">Lõpetamine...</string>
+    <string name="stopped">Lõpetatud</string>
+    
     <string name="city_prompt">Vali linn</string>
     <string-array name="cities_array">
         <item name="city_tartu">Tartu</item>

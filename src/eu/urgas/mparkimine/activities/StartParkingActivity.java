@@ -3,6 +3,7 @@ package eu.urgas.mparkimine.activities;
 import java.util.ArrayList;
 
 import eu.urgas.mparkimine.CarRegistrationNumbersManager;
+import eu.urgas.mparkimine.ParkingManager;
 import eu.urgas.mparkimine.R;
 import eu.urgas.mparkimine.adapters.CitiesListAdapter;
 import eu.urgas.mparkimine.items.CarRegistrationNumber;
@@ -18,7 +19,6 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -161,19 +161,19 @@ public class StartParkingActivity extends Activity {
     }
 
     private Dialog createStartParkingDialog() {
+        final CarRegistrationNumber nr = carRegistrationNumberManager.getDefault();
+        final Region region = chosenRegion;
+        String city = region.getCity().toString();
+        
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.confirm_start_parking));
-
-        String nr = carRegistrationNumberManager.getDefault().toString();
-        String city = chosenRegion.getCity().toString();
-        String region = chosenRegion.getName();
-        builder.setMessage(nr + "\n" + city + "\n" + region);
+        builder.setMessage(nr.toString() + "\n" + city + "\n" + region.getName());
 
         // Confirm and cancel listeners
         builder.setPositiveButton(getString(R.string.start_parking),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
+                        ParkingManager.getInstance().start(getApplicationContext(), nr, region);
                     }
                 });
         builder.setNegativeButton(getString(R.string.cancel),
