@@ -14,7 +14,13 @@
 *.dex
 
 # Java class files
+classes
 *.class
 
 # generated GUI files
 *R.java
+
+# idea stuff
+.idea
+
+local.properties
