@@ -1,14 +1,10 @@
 package eu.urgas.mparkimine;
 
-import eu.urgas.mparkimine.items.CarRegistrationNumber;
-import eu.urgas.mparkimine.items.Region;
-
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.telephony.SmsManager;
+import eu.urgas.mparkimine.items.CarRegistrationNumber;
+import eu.urgas.mparkimine.items.Region;
 
 import java.util.Date;
 
@@ -26,17 +22,12 @@ public class ParkingManager {
         return instance;
     }
 
-    private static final class Status {
-        private static final int OFFLINE = 0x00;
-        private static final int STARTING = 0x10;
-        private static final int STARTED = 0x20;
-        private static final int FAILED = 0x21;
-        private static final int STOPPING = 0x30;
-        private static final int STOPPED = 0x40;
+    enum Status {
+        OFFLINE, STARTING, STARTED, FAILED, STOPPING, STOPPED
     }
 
     public static final String PARKING_OPERATOR_NUMBER = "1902";
-    private int status = Status.OFFLINE;
+    private Status status = Status.OFFLINE;
     private Date startedAt;
     private Date stoppedAt;
     private CarRegistrationNumber carRegistrationNumber;
@@ -48,7 +39,7 @@ public class ParkingManager {
     public void start(Context context, CarRegistrationNumber nr, Region region) {
         mContext = context;
 
-        setUpNotifications();
+        //setUpNotifications();
 
         carRegistrationNumber = nr;
         setStarting();
@@ -86,31 +77,38 @@ public class ParkingManager {
 
     public void setStarting() {
         status = Status.STARTING;
-        updateNotification(mContext.getString(R.string.starting));
+        //updateNotification(mContext.getString(R.string.starting));
     }
 
     public void setStarted() {
         startedAt = new Date();
         status = Status.STARTED;
-        updateNotification(mContext.getString(R.string.started));
+        //updateNotification(mContext.getString(R.string.started));
     }
 
     public void setFailed() {
         status = Status.FAILED;
-        updateNotification(mContext.getString(R.string.failed));
+        //updateNotification(mContext.getString(R.string.failed));
     }
 
     public void setStopping() {
         status = Status.STOPPING;
-        updateNotification(mContext.getString(R.string.stopping));
+        //updateNotification(mContext.getString(R.string.stopping));
     }
 
     public void setStopped() {
         stoppedAt = new Date();
         status = Status.STOPPED;
-        updateNotification(mContext.getString(R.string.stopped));
+        //updateNotification(mContext.getString(R.string.stopped));
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    /*
+    / I don't like this. We should just pass parkingManager to a notification
+    / updater class. No need this dependency here.
     private void setUpNotifications() {
         notificationManager = (NotificationManager) mContext
                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -130,4 +128,5 @@ public class ParkingManager {
         notification.setLatestEventInfo(mContext, "M-Parkimine", content, contentIntent);
         notificationManager.notify(1, notification);
     }
+    */
 }
