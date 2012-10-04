@@ -14,10 +14,7 @@ import eu.urgas.mparkimine.dialogs.RegistrationNumbersDialog;
 import eu.urgas.mparkimine.items.CarRegistrationNumber;
 
 public class MainActivity extends Activity {
-    public static final int CAR_REGISTRATION_NUMBERS_DIALOG_ID = 1;
-
-    private TextView mChooseCarRegistrationNumberTextView;
-
+    private TextView carNumbersSelectView;
     private CarRegistrationNumbersManager carRegistrationNumberManager;
 
     @Override
@@ -30,13 +27,12 @@ public class MainActivity extends Activity {
         // tm.getNetworkCountryIso() => ee
 
         carRegistrationNumberManager = new CarRegistrationNumbersManager(this);
-        mChooseCarRegistrationNumberTextView = (TextView) findViewById(R.id.choose_car_registration_number);
-
-
         selectDefaultCarRegistrationNumber();
 
+        carNumbersSelectView = (TextView) findViewById(R.id.choose_car_registration_number);
+        carNumbersSelectView.setOnClickListener(new SelectCarNumberListener(this));
+
         initCitiesList();
-        initCarRegistrationNumberDropDownList();
 
         super.onCreate(savedInstanceState);
     }
@@ -49,18 +45,8 @@ public class MainActivity extends Activity {
     }
 
     public void selectCarRegistrationNumber(CarRegistrationNumber number) {
-        mChooseCarRegistrationNumberTextView.setText(number.toString());
+        carNumbersSelectView.setText(number.toString());
         carRegistrationNumberManager.setDefault(number);
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id, Bundle args) {
-        switch (id) {
-            case CAR_REGISTRATION_NUMBERS_DIALOG_ID:
-                return new RegistrationNumbersDialog(this);
-            default:
-                return super.onCreateDialog(id, args);
-        }
     }
 
     private void initCitiesList() {
@@ -69,12 +55,17 @@ public class MainActivity extends Activity {
         citiesList.setAdapter(citiesListAdapter);
     }
 
-    private void initCarRegistrationNumberDropDownList() {
-        mChooseCarRegistrationNumberTextView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(CAR_REGISTRATION_NUMBERS_DIALOG_ID);
-            }
-        });
+    private class SelectCarNumberListener implements OnClickListener {
+        private MainActivity activity;
+
+        public SelectCarNumberListener(MainActivity activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Dialog dialog = new RegistrationNumbersDialog(activity);
+            dialog.show();
+        }
     }
 }
