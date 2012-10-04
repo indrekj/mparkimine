@@ -1,11 +1,10 @@
 package eu.urgas.mparkimine;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import eu.urgas.mparkimine.items.CarRegistrationNumber;
+
+import java.util.ArrayList;
 
 public class CarRegistrationNumbersManager {
     private static final String PREFS_NAME = "mparkingPrefs";
@@ -20,11 +19,9 @@ public class CarRegistrationNumbersManager {
         settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
-    public CarRegistrationNumber add(String sNumber) {
-        CarRegistrationNumber number = new CarRegistrationNumber(sNumber);
-        carRegistrationNumbers.add(number);
+    public void add(CarRegistrationNumber nr) {
+        carRegistrationNumbers.add(nr);
         updatePrefs();
-        return number;
     }
 
     public ArrayList<CarRegistrationNumber> getAll() {

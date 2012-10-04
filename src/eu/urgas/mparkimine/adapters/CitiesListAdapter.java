@@ -1,11 +1,5 @@
 package eu.urgas.mparkimine.adapters;
 
-import eu.urgas.mparkimine.CitiesManager;
-import eu.urgas.mparkimine.R;
-import eu.urgas.mparkimine.activities.StartParkingActivity;
-import eu.urgas.mparkimine.items.City;
-import eu.urgas.mparkimine.items.Region;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +7,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+import eu.urgas.mparkimine.CitiesManager;
+import eu.urgas.mparkimine.R;
+import eu.urgas.mparkimine.activities.MainActivity;
+import eu.urgas.mparkimine.items.City;
+import eu.urgas.mparkimine.items.Region;
 
 public class CitiesListAdapter extends BaseExpandableListAdapter {
     private Context mContext;
@@ -51,7 +50,7 @@ public class CitiesListAdapter extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((StartParkingActivity) mContext).showStartParkingDialog(region);
+                ((MainActivity) mContext).showStartParkingDialog(region);
             }
         });
 
