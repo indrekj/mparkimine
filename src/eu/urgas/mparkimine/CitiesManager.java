@@ -11,7 +11,7 @@ public class CitiesManager {
         City tartu = new City("Tartu");
         tartu.addRegion("A15", "Piirkond A15, 15 minutit tasuta.");
         tartu.addRegion("B60", "Piirkond B60, 60 minutit tasuta.");
-        tartu.addRegion("C60", "Piirkond C60, 60 minutit tasuta.");
+        tartu.addRegion("C120", "Piirkond C120, 120 minutit tasuta.");
         cities.add(tartu);
 
         City tallinn = new City("Tallinn");

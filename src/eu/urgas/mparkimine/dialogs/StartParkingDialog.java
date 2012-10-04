@@ -13,10 +13,10 @@ public class StartParkingDialog extends AlertDialog {
     private CarRegistrationNumbersManager carRegistrationNumbersManager;
     private Region region;
 
-    public StartParkingDialog(MainActivity context) {
+    public StartParkingDialog(MainActivity context, Region region) {
         super(context);
         this.carRegistrationNumbersManager = new CarRegistrationNumbersManager(context);
-        this.region = context.getRegion();
+        this.region = region;
     }
 
     @Override

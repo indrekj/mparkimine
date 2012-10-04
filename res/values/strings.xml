@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">M-parkimine</string>
-    <string-array name="tartu_regions">
-	    <item>A piirkond (15 minutit tasuta)</item>
-	    <item>B piirkond (60 minutit tasuta)</item>
-	    <item>C piikond (120 minutit tasuta)</item>
-    </string-array>
-    <string-array name="tallinn_regions"> 
-    </string-array>
     
     <!-- Buttons -->
     <string name="add_new">Lisa uus...</string>
