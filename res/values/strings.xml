@@ -27,6 +27,7 @@
     <string name="failed">EBAÕNNESTUS</string>
     <string name="stopping">Lõpetamine...</string>
     <string name="stopped">Lõpetatud</string>
+    <string name="offline">Mitteaktiivne</string>
     
     <string name="city_prompt">Vali linn</string>
     <string-array name="cities_array">

@@ -1,14 +1,5 @@
 package eu.urgas.mparkimine.activities;
 
-import java.util.ArrayList;
-
-import eu.urgas.mparkimine.CarRegistrationNumbersManager;
-import eu.urgas.mparkimine.ParkingManager;
-import eu.urgas.mparkimine.R;
-import eu.urgas.mparkimine.adapters.CitiesListAdapter;
-import eu.urgas.mparkimine.items.CarRegistrationNumber;
-import eu.urgas.mparkimine.items.Region;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,12 +7,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import eu.urgas.mparkimine.CarRegistrationNumbersManager;
+import eu.urgas.mparkimine.R;
+import eu.urgas.mparkimine.adapters.CitiesListAdapter;
+import eu.urgas.mparkimine.items.CarRegistrationNumber;
+import eu.urgas.mparkimine.items.Region;
+
+import java.util.ArrayList;
 
 public class StartParkingActivity extends Activity {
     private static final int NEW_CAR_REGISTRATION_DIALOG_ID = 0;
@@ -41,11 +38,10 @@ public class StartParkingActivity extends Activity {
         setContentView(R.layout.main);
 
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        Log.v("wha", "111: " + tm.getNetworkOperatorName()); // EMT, TELE2?
-                                                             // RADIOLINJA?
-                                                             // ELISA?
-        Log.v("wha", "222: " + tm.getNetworkOperator()); // 24801,
-        Log.v("wha", "333: " + tm.getNetworkCountryIso()); // EE,
+
+        // tm.getNetworkOperatorName() => EE Tele2
+        // tm.getNetworkOperator() => 24803
+        // tm.getNetworkCountryIso() => ee
 
         carRegistrationNumberManager = new CarRegistrationNumbersManager(this);
         mChooseCarRegistrationNumberTextView = (TextView) findViewById(R.id.choose_car_registration_number);
@@ -170,7 +166,7 @@ public class StartParkingActivity extends Activity {
         builder.setMessage(nr.toString() + "\n" + city + "\n" + region.getName());
 
         // Confirm and cancel listeners
-        builder.setPositiveButton(getString(R.string.start_parking),
+        /*builder.setPositiveButton(getString(R.string.start_parking),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ParkingManager.getInstance().start(getApplicationContext(), nr, region);
@@ -182,7 +178,7 @@ public class StartParkingActivity extends Activity {
                         removeDialog(START_PARKING_DIALOG_ID);
                     }
                 });
-
+    */
         return builder.create();
     }
 }

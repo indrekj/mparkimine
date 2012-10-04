@@ -12,7 +12,7 @@ public class SmsReactor extends BroadcastReceiver {
      * using the Default Package-Visibility
      */
     private static final String ACTION = "android.provider.Telephony.SMS_RECEIVED";
-    
+
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(ACTION)) {
             // The SMS-Messages are 'hiding' within the extras of the Intent.
@@ -20,17 +20,10 @@ public class SmsReactor extends BroadcastReceiver {
             if (bundle != null) {
                 SmsMessage[] messages = getMessagesFromBundle(bundle);
                 processMessages(messages);
+
+                Notifier notifier = new Notifier(context);
+                notifier.refresh();
             }
-
-            //StringBuilder sb = handleIntent(intent);
-
-            // Show the Notification containing the Message.
-            //Toast.makeText(context, sb.toString(), Toast.LENGTH_LONG).show();
-            
-            // Start the Main-Activity
-            //Intent i = new Intent(context, SmsActivity.class);
-            //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //context.startActivity(i);
         }
     }
 
@@ -49,4 +42,17 @@ public class SmsReactor extends BroadcastReceiver {
             handler.execute(message);
         }
     }
+
+    /*
+    * String text = nr.toString() + " " + region.getName(); SmsManager
+    * smsManager = SmsManager.getDefault();
+    * smsManager.sendTextMessage(PARKING_OPERATOR_NUMBER, null, text, null,
+    * null);
+    */
+
+    //updateNotification(mContext.getString(R.string.starting));
+    //updateNotification(mContext.getString(R.string.started));
+    //updateNotification(mContext.getString(R.string.failed));
+    //updateNotification(mContext.getString(R.string.stopping));
+    //updateNotification(mContext.getString(R.string.stopped));
 }
