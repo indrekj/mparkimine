@@ -4,12 +4,15 @@ import android.telephony.SmsMessage;
 
 public class SmsHandler {
     private MessageParser messageParser;
+    private MyApp app;
 
-    public SmsHandler() {
+    public SmsHandler(MyApp app) {
+        this.app = app;
         this.messageParser = new MessageParser();
     }
 
-    public SmsHandler(MessageParser parser) {
+    public SmsHandler(MyApp app, MessageParser parser) {
+        this.app = app;
         this.messageParser = parser;
     }
 
@@ -23,7 +26,7 @@ public class SmsHandler {
 
     private void updateParkingManager(String rawMessage) {
         ParsedMessage parsedMessage = messageParser.parse(rawMessage);
-        ParkingManager parkingManager = ParkingManager.getInstance();
+        ParkingManager parkingManager = app.getParkingManager();
 
         switch (parsedMessage.type) {
             case START_MESSAGE:

@@ -1,22 +1,11 @@
 package eu.urgas.mparkimine;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
 public class MessageParserTest {
-    private MessageParser parser;
-
-    @Before
-    public void setUp() {
-        parser = new MessageParser();
-    }
-
-    @Test
-    public void testTruth() {
-        assertEquals(true, true);
-    }
+    private MessageParser parser = new MessageParser();
 
     @Test
     public void testParkingStarted() {

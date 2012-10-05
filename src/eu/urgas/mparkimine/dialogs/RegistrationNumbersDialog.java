@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import eu.urgas.mparkimine.CarRegistrationNumbersManager;
+import eu.urgas.mparkimine.MyApp;
 import eu.urgas.mparkimine.R;
 import eu.urgas.mparkimine.activities.MainActivity;
 import eu.urgas.mparkimine.items.CarRegistrationNumber;
@@ -17,15 +17,15 @@ import eu.urgas.mparkimine.items.CarRegistrationNumber;
 import java.util.ArrayList;
 
 public class RegistrationNumbersDialog extends AlertDialog {
-    private CarRegistrationNumbersManager carRegistrationNumbersManager;
     private ArrayList<CarRegistrationNumber> numbers;
     private MainActivity activity;
 
     public RegistrationNumbersDialog(MainActivity context) {
         super(context);
         this.activity = context;
-        this.carRegistrationNumbersManager = new CarRegistrationNumbersManager(context);
-        this.numbers = carRegistrationNumbersManager.getAll();
+
+        MyApp app = (MyApp) context.getApplication();
+        this.numbers = app.getNumbersManager().getAll();
     }
 
     @Override

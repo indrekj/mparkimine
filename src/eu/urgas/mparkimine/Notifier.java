@@ -7,14 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 
 public class Notifier {
-    private Context context;
+    private MyApp context;
 
-    public Notifier(Context context) {
+    public Notifier(MyApp context) {
         this.context = context;
     }
 
     public void refresh() {
-        ParkingManager.Status status = ParkingManager.getInstance().getStatus();
+        ParkingManager.Status status = context.getParkingManager().getStatus();
 
         PendingIntent pendingIntent = buildPendingIntent();
         Notification notification = buildNotification(pendingIntent, status);

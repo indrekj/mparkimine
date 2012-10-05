@@ -1,17 +1,11 @@
 package eu.urgas.mparkimine;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class ParkingManagerTest {
-    private ParkingManager manager = ParkingManager.getInstance();
-
-    @Before
-    public void setUp() {
-        manager.reset();
-    }
+    private ParkingManager manager = new ParkingManager();
 
     @Test
     public void testShouldBeOfflineByDefault() {

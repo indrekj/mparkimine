@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import eu.urgas.mparkimine.CarRegistrationNumbersManager;
+import eu.urgas.mparkimine.MyApp;
 import eu.urgas.mparkimine.R;
 import eu.urgas.mparkimine.adapters.CitiesListAdapter;
 import eu.urgas.mparkimine.dialogs.RegistrationNumbersDialog;
@@ -15,10 +15,12 @@ import eu.urgas.mparkimine.items.CarRegistrationNumber;
 
 public class MainActivity extends Activity {
     private TextView carNumbersSelectView;
-    private CarRegistrationNumbersManager carRegistrationNumberManager;
+    private MyApp app;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        this.app = (MyApp) getApplication();
+
         setContentView(R.layout.main);
 
         //TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -27,9 +29,8 @@ public class MainActivity extends Activity {
         // tm.getNetworkCountryIso() => ee
 
         carNumbersSelectView = (TextView) findViewById(R.id.choose_car_registration_number);
-        carNumbersSelectView.setOnClickListener(new SelectCarNumberListener(this));
+        carNumbersSelectView.setOnClickListener(new SelectCarNumberListener());
 
-        carRegistrationNumberManager = new CarRegistrationNumbersManager(this);
         selectDefaultCarRegistrationNumber();
 
         initCitiesList();
@@ -38,7 +39,7 @@ public class MainActivity extends Activity {
     }
 
     public void selectDefaultCarRegistrationNumber() {
-        CarRegistrationNumber number = carRegistrationNumberManager.getDefault();
+        CarRegistrationNumber number = app.getSelectedNumber();
         if (number != null) {
             selectCarRegistrationNumber(number);
         }
@@ -46,7 +47,7 @@ public class MainActivity extends Activity {
 
     public void selectCarRegistrationNumber(CarRegistrationNumber number) {
         carNumbersSelectView.setText(number.toString());
-        carRegistrationNumberManager.setDefault(number);
+        app.selectNumber(number);
     }
 
     private void initCitiesList() {
@@ -56,15 +57,9 @@ public class MainActivity extends Activity {
     }
 
     private class SelectCarNumberListener implements OnClickListener {
-        private MainActivity activity;
-
-        public SelectCarNumberListener(MainActivity activity) {
-            this.activity = activity;
-        }
-
         @Override
         public void onClick(View view) {
-            Dialog dialog = new RegistrationNumbersDialog(activity);
+            Dialog dialog = new RegistrationNumbersDialog(MainActivity.this);
             dialog.show();
         }
     }

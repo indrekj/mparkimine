@@ -4,19 +4,17 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.EditText;
-import eu.urgas.mparkimine.CarRegistrationNumbersManager;
+import eu.urgas.mparkimine.MyApp;
 import eu.urgas.mparkimine.R;
 import eu.urgas.mparkimine.activities.MainActivity;
 import eu.urgas.mparkimine.items.CarRegistrationNumber;
 
 public class CarRegistrationDialog extends AlertDialog {
-    private CarRegistrationNumbersManager carRegistrationNumbersManager;
     private MainActivity activity;
 
     public CarRegistrationDialog(MainActivity context) {
         super(context);
         this.activity = context;
-        this.carRegistrationNumbersManager = new CarRegistrationNumbersManager(context);
     }
 
     @Override
@@ -51,8 +49,10 @@ public class CarRegistrationDialog extends AlertDialog {
         public void onClick(DialogInterface dialogInterface, int id) {
             String newNr = input.getText().toString();
 
+            MyApp app = (MyApp) getContext().getApplicationContext();
+
             CarRegistrationNumber nr = new CarRegistrationNumber(newNr);
-            carRegistrationNumbersManager.add(nr);
+            app.getNumbersManager().add(nr);
 
             activity.selectCarRegistrationNumber(nr);
 

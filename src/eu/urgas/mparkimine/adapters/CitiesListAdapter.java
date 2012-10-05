@@ -10,7 +10,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import eu.urgas.mparkimine.CitiesManager;
 import eu.urgas.mparkimine.R;
-import eu.urgas.mparkimine.activities.MainActivity;
 import eu.urgas.mparkimine.dialogs.StartParkingDialog;
 import eu.urgas.mparkimine.items.City;
 import eu.urgas.mparkimine.items.Region;
@@ -52,7 +51,7 @@ public class CitiesListAdapter extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog dialog = new StartParkingDialog((MainActivity) context, region);
+                Dialog dialog = new StartParkingDialog(context, region);
                 dialog.show();
             }
         });

@@ -9,13 +9,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class SmsHandlerTest {
+    private MyApp context = mock(MyApp.class);
     private SmsMessage message = mock(SmsMessage.class);
     private MessageParser parser = mock(MessageParser.class);
-    private SmsHandler handler = new SmsHandler(parser);
+    private SmsHandler handler = new SmsHandler(context, parser);
 
     @Before
     public void setUp() {
-        ParkingManager.getInstance().reset();
+        when(context.getParkingManager()).thenReturn(new ParkingManager());
 
         when(message.getDisplayOriginatingAddress()).
                 thenReturn(ParkingManager.PARKING_OPERATOR_NUMBER);
@@ -58,6 +59,6 @@ public class SmsHandlerTest {
     }
 
     private ParkingManager.Status currentParkingManagerStatus() {
-        return ParkingManager.getInstance().getStatus();
+        return context.getParkingManager().getStatus();
     }
 }

@@ -1,27 +1,27 @@
 package eu.urgas.mparkimine.dialogs;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import eu.urgas.mparkimine.CarRegistrationNumbersManager;
+import eu.urgas.mparkimine.MyApp;
 import eu.urgas.mparkimine.R;
-import eu.urgas.mparkimine.activities.MainActivity;
 import eu.urgas.mparkimine.items.CarRegistrationNumber;
 import eu.urgas.mparkimine.items.Region;
 
 public class StartParkingDialog extends AlertDialog {
-    private CarRegistrationNumbersManager carRegistrationNumbersManager;
     private Region region;
+    private MyApp app;
 
-    public StartParkingDialog(MainActivity context, Region region) {
+    public StartParkingDialog(Context context, Region region) {
         super(context);
-        this.carRegistrationNumbersManager = new CarRegistrationNumbersManager(context);
+        this.app = (MyApp) context.getApplicationContext();
         this.region = region;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        final CarRegistrationNumber nr = carRegistrationNumbersManager.getDefault();
+        final CarRegistrationNumber nr = app.getSelectedNumber();
         String city = region.getCity().toString();
 
         setTitle(R.string.confirm_start_parking);
@@ -39,7 +39,7 @@ public class StartParkingDialog extends AlertDialog {
     private class StartParkingListener implements DialogInterface.OnClickListener {
         @Override
         public void onClick(DialogInterface dialogInterface, int id) {
-            //ParkingManager.getInstance().start(getApplicationContext(), nr, region);
+            app.startParking(region);
         }
     }
 
