@@ -26,11 +26,11 @@ public class MainActivity extends Activity {
         // tm.getNetworkOperator() => 24803
         // tm.getNetworkCountryIso() => ee
 
-        carRegistrationNumberManager = new CarRegistrationNumbersManager(this);
-        selectDefaultCarRegistrationNumber();
-
         carNumbersSelectView = (TextView) findViewById(R.id.choose_car_registration_number);
         carNumbersSelectView.setOnClickListener(new SelectCarNumberListener(this));
+
+        carRegistrationNumberManager = new CarRegistrationNumbersManager(this);
+        selectDefaultCarRegistrationNumber();
 
         initCitiesList();
 
