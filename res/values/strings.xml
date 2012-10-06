@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">M-parkimine</string>
-    
+
     <!-- Buttons -->
     <string name="add_new">Lisa uus...</string>
     <string name="add">Lisa</string>
     <string name="confirm">Kinnita</string>
     <string name="cancel">Tühista</string>
     <string name="start_parking">Alusta parkimist</string>
-    
+
     <string name="new_car">Uue auto lisamine</string>
     <string name="choose_registration_number">Vali auto</string>
     <string name="registration_number">Auto registreerimisnumber</string>
     <string name="confirm_start_parking">Parkimise alustamine</string>
-    
+
     <!-- Statuses -->
     <string name="starting">Alustamine...</string>
-    <string name="started">Alustatud</string>
+    <string name="started">Alustatud (kliki lõpetamiseks)</string>
     <string name="failed">EBAÕNNESTUS</string>
     <string name="stopping">Lõpetamine...</string>
     <string name="stopped">Lõpetatud</string>
     <string name="offline">Mitteaktiivne</string>
-    
+
     <string name="city_prompt">Vali linn</string>
     <string-array name="cities_array">
         <item>Tartu</item>
