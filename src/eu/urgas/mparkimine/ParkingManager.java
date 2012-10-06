@@ -3,11 +3,12 @@ package eu.urgas.mparkimine;
 import java.util.Date;
 
 public class ParkingManager {
-    enum Status {
+    public enum Status {
         OFFLINE, STARTING, STARTED, FAILED, STOPPING, STOPPED
     }
 
     public static final String PARKING_OPERATOR_NUMBER = "1902";
+    public static final String PARKING_OPERATOR_STOP_NUMBER = "1903";
 
     private Status status = Status.OFFLINE;
     private Date startedAt;

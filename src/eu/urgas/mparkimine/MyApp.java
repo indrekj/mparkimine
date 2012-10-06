@@ -39,4 +39,8 @@ public class MyApp extends Application {
     public void startParking(Region region) {
         new SmsSender(this).send(region);
     }
+
+    public void stopParking() {
+        new StopParkingService(this).execute();
+    }
 }

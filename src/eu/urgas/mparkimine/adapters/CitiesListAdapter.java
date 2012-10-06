@@ -1,7 +1,7 @@
 package eu.urgas.mparkimine.adapters;
 
+import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,11 +15,11 @@ import eu.urgas.mparkimine.items.City;
 import eu.urgas.mparkimine.items.Region;
 
 public class CitiesListAdapter extends BaseExpandableListAdapter {
-    private Context context;
+    private Activity activity;
     private CitiesManager citiesManager;
 
-    public CitiesListAdapter(Context context) {
-        this.context = context;
+    public CitiesListAdapter(Activity activity) {
+        this.activity = activity;
         this.citiesManager = new CitiesManager();
     }
 
@@ -40,7 +40,7 @@ public class CitiesListAdapter extends BaseExpandableListAdapter {
         final Region region = getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(context);
+            LayoutInflater inflater = LayoutInflater.from(activity);
             convertView = inflater.inflate(R.layout.child_row, null);
         }
         TextView name = (TextView) convertView.findViewById(R.id.child_name);
@@ -51,7 +51,7 @@ public class CitiesListAdapter extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog dialog = new StartParkingDialog(context, region);
+                Dialog dialog = new StartParkingDialog(activity, region);
                 dialog.show();
             }
         });
@@ -83,7 +83,7 @@ public class CitiesListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
             ViewGroup parent) {
         if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(context);
+            LayoutInflater inflater = LayoutInflater.from(activity);
             convertView = inflater.inflate(R.layout.group_row, null);
         }
         TextView name = (TextView) convertView.findViewById(R.id.child_name);

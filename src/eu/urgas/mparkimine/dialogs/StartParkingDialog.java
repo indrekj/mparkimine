@@ -1,7 +1,7 @@
 package eu.urgas.mparkimine.dialogs;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import eu.urgas.mparkimine.MyApp;
@@ -12,10 +12,12 @@ import eu.urgas.mparkimine.items.Region;
 public class StartParkingDialog extends AlertDialog {
     private Region region;
     private MyApp app;
+    private Activity activity;
 
-    public StartParkingDialog(Context context, Region region) {
-        super(context);
-        this.app = (MyApp) context.getApplicationContext();
+    public StartParkingDialog(Activity activity, Region region) {
+        super(activity);
+        this.activity = activity;
+        this.app = (MyApp) activity.getApplicationContext();
         this.region = region;
     }
 
@@ -40,6 +42,7 @@ public class StartParkingDialog extends AlertDialog {
         @Override
         public void onClick(DialogInterface dialogInterface, int id) {
             app.startParking(region);
+            activity.finish();
         }
     }
 

@@ -5,22 +5,24 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import eu.urgas.mparkimine.activities.NotificationClickActivity;
 
 public class Notifier {
-    private MyApp context;
+    private MyApp app;
+    private final static int NOTIFICATION_ID = 1;
 
-    public Notifier(MyApp context) {
-        this.context = context;
+    public Notifier(MyApp app) {
+        this.app = app;
     }
 
     public void refresh() {
-        ParkingManager.Status status = context.getParkingManager().getStatus();
+        ParkingManager.Status status = app.getParkingManager().getStatus();
 
         PendingIntent pendingIntent = buildPendingIntent();
         Notification notification = buildNotification(pendingIntent, status);
 
         NotificationManager notificationManager = getNotificationManager();
-        notificationManager.notify(1, notification);
+        notificationManager.notify(NOTIFICATION_ID, notification);
     }
 
     /**
@@ -31,9 +33,9 @@ public class Notifier {
      * the activity from being created again.
      */
     private PendingIntent buildPendingIntent() {
-        Intent intent = new Intent();
+        Intent intent = new Intent(app, NotificationClickActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getActivity(app, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     /**
@@ -41,25 +43,25 @@ public class Notifier {
      * FLAG_NO_CLEAR - do not let user to clear this notification
      */
     private Notification buildNotification(PendingIntent intent, ParkingManager.Status status) {
-        String appName = context.getString(R.string.app_name);
+        String appName = app.getString(R.string.app_name);
         String text = getStatusText(status);
 
         Notification notification = new Notification();
         notification.icon = R.drawable.icon;
         notification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
-        notification.setLatestEventInfo(context, appName, text, intent);
+        notification.setLatestEventInfo(app, appName, text, intent);
         return notification;
     }
 
-    private NotificationManager getNotificationManager() {
-        return (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-    }
-
     private String getStatusText(ParkingManager.Status status) {
-        String packageName = context.getPackageName();
+        String packageName = app.getPackageName();
         String formattedStatus = status.name().toLowerCase();
 
-        int id = context.getResources().getIdentifier(formattedStatus, "string", packageName);
-        return context.getString(id);
+        int id = app.getResources().getIdentifier(formattedStatus, "string", packageName);
+        return app.getString(id);
+    }
+
+    private NotificationManager getNotificationManager() {
+        return (NotificationManager) app.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 }
