@@ -7,8 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import eu.urgas.mparkimine.activities.NotificationClickActivity;
 
-public class Notifier {
-    private MyApp app;
+class Notifier {
+    private final MyApp app;
     private final static int NOTIFICATION_ID = 1;
 
     public Notifier(MyApp app) {

@@ -1,7 +1,7 @@
 package eu.urgas.mparkimine.items;
 
 public class CarRegistrationNumber {
-    private String number;
+    private final String number;
 
     public CarRegistrationNumber(String number) {
         this.number = number;

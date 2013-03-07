@@ -3,9 +3,9 @@ package eu.urgas.mparkimine;
 import android.telephony.SmsManager;
 import eu.urgas.mparkimine.items.Region;
 
-public class SmsSender {
-    private MyApp app;
-    private ParkingManager parkingManager;
+class SmsSender {
+    private final MyApp app;
+    private final ParkingManager parkingManager;
 
     public SmsSender(MyApp app) {
         this.app = app;

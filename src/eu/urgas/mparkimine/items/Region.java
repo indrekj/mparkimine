@@ -1,9 +1,9 @@
 package eu.urgas.mparkimine.items;
 
 public class Region {
-    private City city;
-    private String name;
-    private String description;
+    private final City city;
+    private final String name;
+    private final String description;
 
     public Region(City city, String name, String description) {
         this.city = city;

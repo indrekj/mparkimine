@@ -17,15 +17,15 @@ import eu.urgas.mparkimine.items.CarRegistrationNumber;
 import java.util.ArrayList;
 
 public class RegistrationNumbersDialog extends AlertDialog {
-    private ArrayList<CarRegistrationNumber> numbers;
-    private MainActivity activity;
+    private final ArrayList<CarRegistrationNumber> numbers;
+    private final MainActivity activity;
 
     public RegistrationNumbersDialog(MainActivity context) {
         super(context);
         this.activity = context;
 
         MyApp app = (MyApp) context.getApplication();
-        this.numbers = app.getNumbersManager().getAll();
+        this.numbers = app.carRegistrationNumbers();
     }
 
     @Override

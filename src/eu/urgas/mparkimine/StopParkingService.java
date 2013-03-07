@@ -3,8 +3,8 @@ package eu.urgas.mparkimine;
 import android.content.Intent;
 import android.net.Uri;
 
-public class StopParkingService {
-    private MyApp app;
+class StopParkingService {
+    private final MyApp app;
 
     public StopParkingService(MyApp app) {
         this.app = app;

@@ -18,9 +18,9 @@ import eu.urgas.mparkimine.items.City;
 import eu.urgas.mparkimine.items.Region;
 
 public class CitiesListAdapter extends BaseExpandableListAdapter {
-    private Activity activity;
-    private MyApp app;
-    private CitiesManager citiesManager;
+    private final Activity activity;
+    private final MyApp app;
+    private final CitiesManager citiesManager;
 
     public CitiesListAdapter(Activity activity) {
         this.activity = activity;
@@ -56,7 +56,7 @@ public class CitiesListAdapter extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (app.getNumbersManager().hasAny()) {
+                if (app.hasAnyCarRegistrationNumbers()) {
                     Dialog dialog = new StartParkingDialog(activity, region);
                     dialog.show();
                 } else {

@@ -1,4 +1,4 @@
 package eu.urgas.mparkimine;
 
-public class SmsReactorTest {
+class SmsReactorTest {
 }

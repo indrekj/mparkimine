@@ -5,7 +5,7 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 
 public class MessageParserTest {
-    private MessageParser parser = new MessageParser();
+    private final MessageParser parser = new MessageParser();
 
     @Test
     public void testParkingStarted() {

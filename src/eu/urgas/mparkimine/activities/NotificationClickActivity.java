@@ -8,7 +8,6 @@ import eu.urgas.mparkimine.ParkingManager;
 
 public class NotificationClickActivity extends Activity {
     private MyApp app;
-    private boolean parkingStopped;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

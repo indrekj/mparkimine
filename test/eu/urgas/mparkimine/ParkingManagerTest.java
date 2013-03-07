@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ParkingManagerTest {
-    private ParkingManager manager = new ParkingManager();
+    private final ParkingManager manager = new ParkingManager();
 
     @Test
     public void testShouldBeOfflineByDefault() {

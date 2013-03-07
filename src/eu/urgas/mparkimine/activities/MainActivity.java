@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
     }
 
-    public void selectDefaultCarRegistrationNumber() {
+    private void selectDefaultCarRegistrationNumber() {
         CarRegistrationNumber number = app.getSelectedNumber();
         if (number != null) {
             selectCarRegistrationNumber(number);

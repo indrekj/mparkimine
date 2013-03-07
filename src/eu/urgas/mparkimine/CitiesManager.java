@@ -5,7 +5,7 @@ import eu.urgas.mparkimine.items.City;
 import java.util.ArrayList;
 
 public class CitiesManager {
-    private ArrayList<City> cities = new ArrayList<City>();
+    private final ArrayList<City> cities = new ArrayList<City>();
 
     public CitiesManager() {
         City tartu = new City("Tartu");
@@ -20,10 +20,6 @@ public class CitiesManager {
         tallinn.addRegion("VANALINN15", "Vanalinn, 15 minutit tasuta.");
         tallinn.addRegion("LINNATEATER", "Linnateater.");
         cities.add(tallinn);
-    }
-
-    public ArrayList<City> getCities() {
-        return this.cities;
     }
 
     public int size() {

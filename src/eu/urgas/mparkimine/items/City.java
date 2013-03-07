@@ -3,8 +3,8 @@ package eu.urgas.mparkimine.items;
 import java.util.ArrayList;
 
 public class City {
-    private String name;
-    private ArrayList<Region> regions = new ArrayList<Region>();
+    private final String name;
+    private final ArrayList<Region> regions = new ArrayList<Region>();
 
     public City(String name) {
         this.name = name;

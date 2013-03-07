@@ -2,9 +2,9 @@ package eu.urgas.mparkimine;
 
 import android.telephony.SmsMessage;
 
-public class SmsHandler {
-    private MessageParser messageParser;
-    private MyApp app;
+class SmsHandler {
+    private final MessageParser messageParser;
+    private final MyApp app;
 
     public SmsHandler(MyApp app) {
         this.app = app;

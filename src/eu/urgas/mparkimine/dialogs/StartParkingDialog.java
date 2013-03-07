@@ -10,9 +10,9 @@ import eu.urgas.mparkimine.items.CarRegistrationNumber;
 import eu.urgas.mparkimine.items.Region;
 
 public class StartParkingDialog extends AlertDialog {
-    private Region region;
-    private MyApp app;
-    private Activity activity;
+    private final Region region;
+    private final MyApp app;
+    private final Activity activity;
 
     public StartParkingDialog(Activity activity, Region region) {
         super(activity);

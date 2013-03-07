@@ -1,7 +1,7 @@
 package eu.urgas.mparkimine;
 
 public class ParsedMessage {
-    public Type type;
+    public final Type type;
 
     public static enum Type {
         UNKNOWN, STOP_MESSAGE, START_MESSAGE

@@ -9,8 +9,8 @@ import eu.urgas.mparkimine.R;
 import eu.urgas.mparkimine.activities.MainActivity;
 import eu.urgas.mparkimine.items.CarRegistrationNumber;
 
-public class CarRegistrationDialog extends AlertDialog {
-    private MainActivity activity;
+class CarRegistrationDialog extends AlertDialog {
+    private final MainActivity activity;
 
     public CarRegistrationDialog(MainActivity context) {
         super(context);
@@ -39,7 +39,7 @@ public class CarRegistrationDialog extends AlertDialog {
     }
 
     private class AddCarRegistrationNumberListener implements OnClickListener {
-        private EditText input;
+        private final EditText input;
 
         public AddCarRegistrationNumberListener(EditText input) {
             this.input = input;
@@ -52,7 +52,7 @@ public class CarRegistrationDialog extends AlertDialog {
             MyApp app = (MyApp) getContext().getApplicationContext();
 
             CarRegistrationNumber nr = new CarRegistrationNumber(newNr);
-            app.getNumbersManager().add(nr);
+            app.addCarRegistrationNumber(nr);
 
             activity.selectCarRegistrationNumber(nr);
 

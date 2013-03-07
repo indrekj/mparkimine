@@ -1,6 +1,6 @@
 package eu.urgas.mparkimine;
 
-public class MessageParser {
+class MessageParser {
     /**
      * At the moment I'm avoiding using umlauts. I'm afraid that they're are
      * not used correct ones.

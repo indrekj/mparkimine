@@ -9,10 +9,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class SmsHandlerTest {
-    private MyApp context = mock(MyApp.class);
-    private SmsMessage message = mock(SmsMessage.class);
-    private MessageParser parser = mock(MessageParser.class);
-    private SmsHandler handler = new SmsHandler(context, parser);
+    private final MyApp context = mock(MyApp.class);
+    private final SmsMessage message = mock(SmsMessage.class);
+    private final MessageParser parser = mock(MessageParser.class);
+    private final SmsHandler handler = new SmsHandler(context, parser);
 
     @Before
     public void setUp() {
