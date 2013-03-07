@@ -57,4 +57,8 @@ public class CarRegistrationNumbersManager {
         String newValue = Utils.join(carRegistrationNumbers, LIST_SEPARATOR);
         settings.edit().putString(LIST_KEY, newValue).commit();
     }
+
+    public boolean hasAny() {
+        return getAll().size() > 0;
+    }
 }

@@ -1,7 +1,9 @@
 package eu.urgas.mparkimine.adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import eu.urgas.mparkimine.CitiesManager;
+import eu.urgas.mparkimine.MyApp;
 import eu.urgas.mparkimine.R;
 import eu.urgas.mparkimine.dialogs.StartParkingDialog;
 import eu.urgas.mparkimine.items.City;
@@ -16,10 +19,12 @@ import eu.urgas.mparkimine.items.Region;
 
 public class CitiesListAdapter extends BaseExpandableListAdapter {
     private Activity activity;
+    private MyApp app;
     private CitiesManager citiesManager;
 
     public CitiesListAdapter(Activity activity) {
         this.activity = activity;
+        this.app = (MyApp) activity.getApplicationContext();
         this.citiesManager = new CitiesManager();
     }
 
@@ -51,8 +56,23 @@ public class CitiesListAdapter extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialog dialog = new StartParkingDialog(activity, region);
-                dialog.show();
+                if (app.getNumbersManager().hasAny()) {
+                    Dialog dialog = new StartParkingDialog(activity, region);
+                    dialog.show();
+                } else {
+                    // REFACTOR
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    builder.setTitle("Tähelepanu");
+                    builder.setMessage("Enne parkmist lisa auto registreerimisnumber");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
             }
         });
 
@@ -83,7 +103,7 @@ public class CitiesListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
             ViewGroup parent) {
         if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(activity);
+            LayoutInflater inflater = LayoutInflater.from(app);
             convertView = inflater.inflate(R.layout.group_row, null);
         }
         TextView name = (TextView) convertView.findViewById(R.id.child_name);

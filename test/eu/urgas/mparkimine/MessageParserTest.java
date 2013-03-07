@@ -26,6 +26,16 @@ public class MessageParserTest {
     }
 
     @Test
+    public void testParkingReminder() {
+        String rawMessage = "123ABC parkimine tsoonis C120 lõpeb 16:07 14.02.13." +
+                " Parkimise jätkamiseks helistage numbrile 1901. Lisainfo numbril 1903.";
+        ParsedMessage parsedMessage = parser.parse(rawMessage);
+
+        // We do not handle reminders yet
+        assertEquals(ParsedMessage.Type.UNKNOWN, parsedMessage.type);
+    }
+
+    @Test
     public void testUnknownMessage() {
         String rawMessage = "Hey mate, what's up?";
         ParsedMessage parsedMessage = parser.parse(rawMessage);
